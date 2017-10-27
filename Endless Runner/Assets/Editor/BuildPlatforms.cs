@@ -1,6 +1,7 @@
 ﻿// folder named editor, goes anywhere
 // script buildPlatforms
-
+using System.Text;
+using System.IO;
 
 using System.Collections;
 using System.Collections.Generic;
@@ -70,7 +71,27 @@ public class BuildPlatforms
         string pathToProject = pathToAssets.Replace("/Assets", "");
         // string buildPath = pathToProject + "/Builds/EndlessRunneriOSDev";
 
-        string buildPath = string.Format("{0}/Builds/{1}/{2}/EndlessRunner{3}", pathToProject, target, isDev ? "Dev" : "Release", "1");
+
+
+
+        // updating build number
+
+        string path = "Assets/Resources/BuildNumber.txt";
+        //Read the text from directly from the build number file and turn it into an int.
+        StreamReader reader = new StreamReader(path);
+        string buildString = reader.ReadToEnd();
+        int buildNumber = int.Parse(buildString);
+        reader.Close();
+        //increase build number
+        StreamWriter writer = new StreamWriter(path, true);
+        buildNumber++;
+        writer.WriteLine(buildNumber);
+        writer.Close();
+
+
+
+
+        string buildPath = string.Format("{0}/Builds/{1}/{2}/EndlessRunner{3}", pathToProject, target, isDev ? "Dev" : "Release", buildNumber);
 
         string.Format("{0}{1}{2}");
 
@@ -89,3 +110,4 @@ public class BuildPlatforms
     }
 
 }
+
