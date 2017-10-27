@@ -13,7 +13,7 @@ public class BuildPlatforms
 {
     private static string[] scenes = new string[] {
         "Assets/Scenes/EndlessSideScroll"
-    };
+    }; 
 
 
     #region MenuItems
@@ -73,7 +73,7 @@ public class BuildPlatforms
 
 
 
-
+        /*
         // updating build number
 
         string path = "Assets/Resources/BuildNumber.txt";
@@ -87,13 +87,13 @@ public class BuildPlatforms
         buildNumber++;
         writer.WriteLine(buildNumber);
         writer.Close();
+        */
 
 
 
+        string buildPath = string.Format("{0}/Builds/{1}/{2}/EndlessRunner{3}", pathToProject, target, isDev ? "Dev" : "Release", "1" /*buildNumber*/);
 
-        string buildPath = string.Format("{0}/Builds/{1}/{2}/EndlessRunner{3}", pathToProject, target, isDev ? "Dev" : "Release", buildNumber);
-
-        string.Format("{0}{1}{2}");
+        //string.Format("{0}{1}{2}");
 
         Debug.Log(buildPath);
 
