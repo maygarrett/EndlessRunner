@@ -11,7 +11,7 @@ using UnityEditor;
 public class BuildPlatforms
 {
     private static string[] scenes = new string[] {
-        "Assets/Scenes/EndlessSideScroll" 
+        "Assets/Scenes/EndlessSideScroll"
     };
 
 
@@ -47,6 +47,21 @@ public class BuildPlatforms
         Build(false, BuildTarget.iOS);
     }
 
+    [MenuItem("Build/Android/All")]
+    public static void BuildAndroidAll()
+    {
+        Build(true, BuildTarget.Android);
+        Build(false, BuildTarget.Android);
+    }
+
+    [MenuItem("Build/All")]
+    public static void BuildAll()
+    {
+        Build(true, BuildTarget.iOS);
+        Build(false, BuildTarget.iOS);
+        Build(true, BuildTarget.Android);
+        Build(false, BuildTarget.Android);
+    }
     #endregion
 
     public static void Build(bool isDev, BuildTarget target)
