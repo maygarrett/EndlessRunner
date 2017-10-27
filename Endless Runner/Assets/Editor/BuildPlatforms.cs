@@ -11,9 +11,11 @@ using UnityEditor;
 
 public class BuildPlatforms
 {
-   /* private static string[] scenes = new string[] {
-        "Assets/Scenes/EndlessSideScroll"
-    }; */
+    /* private static string[] scenes = new string[] {
+         "Assets/Scenes/EndlessSideScroll"
+     }; */
+
+    private int buildNumber;
 
 
     #region MenuItems
@@ -116,7 +118,11 @@ public class BuildPlatforms
                 break;
         }
 
-        string buildPath = string.Format("{0}/Builds/{1}/{2}/EndlessRunner{3}{4}", pathToProject, target, isDev ? "Dev" : "Release", buildNumber, extension);
+        StreamReader reader = new StreamReader("Assets/Resources/BuildNumber.txt");
+        string buildString = reader.ReadToEnd();
+        reader.Close();
+
+        string buildPath = string.Format("{0}/Builds/{1}/{2}/EndlessRunner{3}{4}", pathToProject, target, isDev ? "Dev" : "Release", buildString, extension);
 
         //string.Format("{0}{1}{2}");
 
