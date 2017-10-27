@@ -34,3 +34,6 @@ sysinfo.txt
 *.unitypackage
 Endless Runner/Temp/UnityLockfile
 Endless Runner/Builds/
+Endless Runner/Library
+Endless Runner/ProjectSettings
+Endless Runner/Temp
