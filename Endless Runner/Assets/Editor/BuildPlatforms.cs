@@ -83,7 +83,7 @@ public class BuildPlatforms
         //options.scenes = new string[] { "Assets/Platform/Scenes/SinglePlatform.unity" } // add all scenes and their paths to this string array
         options.scenes = scenes;
 
-        Debug.Log("BuildingiOS Dev");
+        Debug.Log("Building" + string.Format( "{0} {1}", target, isDev ? "Dev" : "Release"));
         BuildPipeline.BuildPlayer(options);
         Debug.Log("Build Complete");
     }

@@ -36,7 +36,7 @@ public class Player : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.DownArrow))
         {
             transform.localScale = new Vector3(initialScale.x, initialScale.y / 2, initialScale.z);
-            StartCoroutine("Resize");
+            // StartCoroutine("Resize");
         }
         if(Input.GetKeyUp(KeyCode.DownArrow))
         {
