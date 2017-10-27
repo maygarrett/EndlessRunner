@@ -68,7 +68,7 @@ public class BuildPlatforms
     {
         string pathToAssets = Application.dataPath;
         string pathToProject = pathToAssets.Replace("/Assets", "");
-        // string buildPath = pathToProject + "/Builds/BubbleblastiOSDev";
+        // string buildPath = pathToProject + "/Builds/EndlessRunneriOSDev";
 
         string buildPath = string.Format("{0}/Builds/{1}/{2}/EndlessRunner{3}", pathToProject, target, isDev ? "Dev" : "Release", "1");
 

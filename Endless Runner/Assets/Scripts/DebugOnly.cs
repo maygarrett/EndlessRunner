@@ -6,7 +6,7 @@ public class DebugOnly : MonoBehaviour {
 
     private void Awake()
     {
-        GameObject.SetActive(Debug.isDebugBuilt);
+        gameObject.SetActive(Debug.isDebugBuild);
     }
 
     // to withhold things from dev builds, deactivate it if bool Debug.isDebugBuilt is false. Debug.isDebugBuilt is true when in inspector and using development build options, and is false when using release options
