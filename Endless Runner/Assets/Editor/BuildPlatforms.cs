@@ -1,57 +1,76 @@
-﻿using System.Collections;
+﻿// folder named editor, goes anywhere
+// script buildPlatforms
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class BuildPlatforms {
-	private static string[] scenes = new string[] {
-		"Assets/Scenes/MyMainMenu",
-		"Assets/Scenes/MyGame"
-	};
 
-	#region MENU_ITEMS
-	[MenuItem("Build/PC/Dev")]
-	public static void BuildPCDev() {
-		Build(true,BuildTarget.StandaloneWindows);
-	}
+public class BuildPlatforms
+{
+    private static string[] scenes = new string[] {
+        "Assets/Scenes/EndlessSideScroll" 
+    };
 
-	public static void BuildPCRelease() {
-		Build(false,BuildTarget.StandaloneWindows);
-	}
 
-	public static void BuildPCAll() {
-		BuildPCDev();
-		BuildPCRelease();
-	}
-	#endregion
+    #region MenuItems
+    [MenuItem("Build/iOS/Dev")]
+    public static void BuildiOSDev()
+    {
+        Build(true, BuildTarget.iOS);
+    }
 
-	public static string GetProjectPath() {
-		string pathToProject = Application.dataPath;
-		pathToProject = pathToProject.Replace("/Assets","");
+    [MenuItem("Build/iOS/Rel")]
+    public static void BuildiOSRel()
+    {
+        Build(false, BuildTarget.iOS);
+    }
 
-		return pathToProject;
-	}
+    [MenuItem("Build/Android/Dev")]
+    public static void BuildAndroidDev()
+    {
+        Build(true, BuildTarget.Android);
+    }
 
-	public static void Build(bool isDev, BuildTarget target) {
-		BuildPlayerOptions options = new BuildPlayerOptions();
-		string extension = string.Empty;
+    [MenuItem("Build/Android/Rel")]
+    public static void BuildAndroidRel()
+    {
+        Build(false, BuildTarget.Android);
+    }
 
-		switch(target) {
-			case BuildTarget.StandaloneWindows:
-				extension = ".exe";
-				break;
-			case BuildTarget.Android:
-				extension = ".apk";
-				break;
-		}
+    [MenuItem("Build/iOS/All")]
+    public static void BuildiOSAll()
+    {
+        Build(true, BuildTarget.iOS);
+        Build(false, BuildTarget.iOS);
+    }
 
-		options.locationPathName = string.Format("{0}/Build/{1}_{2}/MyGame{3}", GetProjectPath(),target,isDev ? "Dev" : "", extension);
-		options.scenes = scenes;
-		options.target = target;
-		options.options = isDev ? BuildOptions.Development : BuildOptions.None;
+    #endregion
 
-		Debug.LogFormat("Building {0} to {1}\nDev: {2}",options.target,options.locationPathName,isDev);	
-		BuildPipeline.BuildPlayer(options);
-	}
+    public static void Build(bool isDev, BuildTarget target)
+    {
+        string pathToAssets = Application.dataPath;
+        string pathToProject = pathToAssets.Replace("/Assets", "");
+        // string buildPath = pathToProject + "/Builds/BubbleblastiOSDev";
+
+        string buildPath = string.Format("{0}/Builds/{1}/{2}/EndlessRunner{3}", pathToProject, target, isDev ? "Dev" : "Release", "1");
+
+        string.Format("{0}{1}{2}");
+
+        Debug.Log(buildPath);
+
+        BuildPlayerOptions options = new BuildPlayerOptions();
+        options.locationPathName = buildPath;
+        options.options = isDev ? BuildOptions.Development : BuildOptions.None; // in line conditional statements->    condition ? truth : nontruth
+        options.target = target;
+        //options.scenes = new string[] { "Assets/Platform/Scenes/SinglePlatform.unity" } // add all scenes and their paths to this string array
+        options.scenes = scenes;
+
+        Debug.Log("BuildingiOS Dev");
+        BuildPipeline.BuildPlayer(options);
+        Debug.Log("Build Complete");
+    }
 
 }
