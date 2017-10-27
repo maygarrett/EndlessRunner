@@ -120,9 +120,10 @@ public class BuildPlatforms
 
         StreamReader reader = new StreamReader("Assets/Resources/BuildNumber.txt");
         string buildString = reader.ReadToEnd();
+        int buildNumber = int.Parse(buildString);
         reader.Close();
 
-        string buildPath = string.Format("{0}/Builds/{1}/{2}/EndlessRunner{3}{4}", pathToProject, target, isDev ? "Dev" : "Release", buildString, extension);
+        string buildPath = string.Format("{0}/Builds/{1}/{2}/EndlessRunner{3}{4}", pathToProject, target, isDev ? "Dev" : "Release", buildNumber, extension);
 
         //string.Format("{0}{1}{2}");
 
