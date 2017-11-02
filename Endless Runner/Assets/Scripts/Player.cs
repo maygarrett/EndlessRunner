@@ -8,19 +8,19 @@ using GameData;
 public class Player : MonoBehaviour {
 
     
-    Rigidbody2D rb;
-    LevelManager levelManager;
+    private Rigidbody2D _rb;
+    private LevelManager _levelManager;
 
-    Vector3 initialScale;
+    private Vector3 _initialScale;
 
     private float _jumpForce;
     private Vector2 _jumpVector;
 
-    bool isGrounded;
+    private bool _isGrounded;
 
     // mobile swipe input variables
-    private const float MIN_SWIPE_LENGTH = 50f;
-    private const float MAX_SWIPE_TIME = 0.35f;
+    private float _MIN_SWIPE_LENGTH;
+    private float _MAX_SWIPE_TIME;
     private float _elapsedTime;
     private bool _startTimer;
     private Vector3 _mouseStartPos;
@@ -32,13 +32,16 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        rb = GetComponent<Rigidbody2D>();
-        levelManager = GameObject.FindObjectOfType<LevelManager>();
-        initialScale = transform.localScale;
+        _rb = GetComponent<Rigidbody2D>();
+        _levelManager = GameObject.FindObjectOfType<LevelManager>();
+        _initialScale = transform.localScale;
         _elapsedTime = 0f;
 
+        // assign constants
         _jumpForce = Constants.GetFloat("JumpForce");
         _jumpVector = new Vector2(0, _jumpForce);
+        _MIN_SWIPE_LENGTH = Constants.GetFloat("MIN_SWIPE_LENGTH");
+        _MAX_SWIPE_TIME = Constants.GetFloat("MIN_SWIPE_LENGTH");
     }
 	
 	// Update is called once per frame
@@ -59,12 +62,12 @@ public class Player : MonoBehaviour {
     {
         if(c.gameObject.tag == "Ground")
         {
-            isGrounded = true;
+            _isGrounded = true;
         }
 
         if(c.gameObject.tag == "Obstacle")
         {
-            levelManager.PlayerRespawn();
+            _levelManager.PlayerRespawn();
         }
     }
 
@@ -72,31 +75,31 @@ public class Player : MonoBehaviour {
     {
         if (c.gameObject.tag == "Ground")
         {
-            isGrounded = false;
+            _isGrounded = false;
         }
     }
 
     private IEnumerator Resize()
     {
         yield return new WaitForSeconds(0.6f);
-        transform.localScale = initialScale;
+        transform.localScale = _initialScale;
     }
 
     private void Slide()
     {
-        transform.localScale = new Vector3(initialScale.x, initialScale.y / 2, initialScale.z);
+        transform.localScale = new Vector3(_initialScale.x, _initialScale.y / 2, _initialScale.z);
         StartCoroutine("Resize");
     }
 
     private void Jump()
     {
-        rb.AddForce(_jumpVector);
+        _rb.AddForce(_jumpVector);
     }
 
     private void PCControls()
     {
         // jumping mechanic
-        if (isGrounded)
+        if (_isGrounded)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -104,7 +107,7 @@ public class Player : MonoBehaviour {
             }
         }
         // sliding mechanic
-        if (Input.GetKeyDown(KeyCode.DownArrow) && !isGrounded)
+        if (Input.GetKeyDown(KeyCode.DownArrow) && !_isGrounded)
         {
             Slide();
         }
@@ -121,7 +124,7 @@ public class Player : MonoBehaviour {
                 _elapsedTime = 0f;
             }
             // if the touch ends and elapsed time was less that max swipe time
-            if (touch.phase == TouchPhase.Ended && _elapsedTime < MAX_SWIPE_TIME)
+            if (touch.phase == TouchPhase.Ended && _elapsedTime < _MAX_SWIPE_TIME)
             {
                 // if swipe was up
                 if (touch.deltaPosition.y > 0)
@@ -135,11 +138,11 @@ public class Player : MonoBehaviour {
         // calculate time spent swiping
         if (_startTimer)
         {
-            if (_elapsedTime < MAX_SWIPE_TIME)
+            if (_elapsedTime < _MAX_SWIPE_TIME)
             {
                 _elapsedTime += Time.deltaTime;
             }
-            if (_elapsedTime >= MAX_SWIPE_TIME)
+            if (_elapsedTime >= _MAX_SWIPE_TIME)
             {
                 _startTimer = false;
             }
@@ -155,7 +158,7 @@ public class Player : MonoBehaviour {
             _startTimer = true;
             _elapsedTime = 0f;
         }
-        if (Input.GetMouseButtonUp(0) && _elapsedTime < MAX_SWIPE_TIME)
+        if (Input.GetMouseButtonUp(0) && _elapsedTime < _MAX_SWIPE_TIME)
         {
             _startTimer = false;
             Vector3 mouseEndPos = Input.mousePosition;
