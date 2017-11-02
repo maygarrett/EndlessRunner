@@ -39,11 +39,6 @@ public class LevelManager : MonoBehaviour {
     private GameObject _slideSpawnPoint;
 
 
-    private void Awake()
-    {
-        Constants.Initialize();
-    }
-
     // Use this for initialization
     void Start () {
         // setting constants from csv
