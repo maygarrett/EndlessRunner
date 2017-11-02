@@ -38,6 +38,9 @@ public class LevelManager : MonoBehaviour {
     [SerializeField]
     private GameObject _slideSpawnPoint;
 
+    // score management
+    [SerializeField]
+    private ScoreManager _scoreManager;
 
     // Use this for initialization
     void Start () {
@@ -92,6 +95,8 @@ public class LevelManager : MonoBehaviour {
         {
             Destroy(tempCurrentObstacles[i]);
         }
+
+        _scoreManager.SetScore(0);
     }
 
     private void SpawnObstacle()
