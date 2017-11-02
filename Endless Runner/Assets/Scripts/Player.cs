@@ -13,8 +13,8 @@ public class Player : MonoBehaviour {
 
     Vector3 initialScale;
 
-    private float jumpForce = Constants.GetFloat("JumpForce");
-    Vector2 jumpVector;
+    private float _jumpForce;
+    private Vector2 _jumpVector;
 
     bool isGrounded;
 
@@ -25,14 +25,20 @@ public class Player : MonoBehaviour {
     private bool _startTimer;
     private Vector3 _mouseStartPos;
 
+    private void Awake()
+    {
+        Constants.Initialize();
+    }
 
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody2D>();
         levelManager = GameObject.FindObjectOfType<LevelManager>();
-        jumpVector = new Vector2(0, 800 /*jumpForce*/);
         initialScale = transform.localScale;
         _elapsedTime = 0f;
+
+        _jumpForce = Constants.GetFloat("JumpForce");
+        _jumpVector = new Vector2(0, _jumpForce);
     }
 	
 	// Update is called once per frame
@@ -84,7 +90,7 @@ public class Player : MonoBehaviour {
 
     private void Jump()
     {
-        rb.AddForce(jumpVector);
+        rb.AddForce(_jumpVector);
     }
 
     private void PCControls()
