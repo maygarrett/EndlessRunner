@@ -1,6 +1,11 @@
-﻿using System.Collections;
+﻿// << level manager >>
+// spawning obstacles, managing player respawn and difficulty
+// author: Garrett May
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameData;
 
 public class LevelManager : MonoBehaviour {
 
@@ -8,13 +13,13 @@ public class LevelManager : MonoBehaviour {
     private float _difficulty;
 
     //spawn timers
-    private float _initialSpawnRate;
+    private float _INITIAL_SPAWN_RATE;
     [SerializeField]
-    private float _spawnRate = 1.0f;
+    private float _spawnRate;
     private float _timeSinceLastSpawn = 0.0f;
 
     //difficulty timers
-    private float _initialDifficulty;
+    private float _INITIAL_DIFFICULTY_RATE;
     [SerializeField]
     private float _difficultyRate = 20.0f;
     private float _timeSinceLastIncrease = 0.0f;
@@ -33,10 +38,20 @@ public class LevelManager : MonoBehaviour {
     [SerializeField]
     private GameObject _slideSpawnPoint;
 
-	// Use this for initialization
-	void Start () {
-        _initialDifficulty = _difficulty;
-        _initialSpawnRate = _spawnRate;
+
+    private void Awake()
+    {
+        Constants.Initialize();
+    }
+
+    // Use this for initialization
+    void Start () {
+        // setting constants from csv
+        _INITIAL_SPAWN_RATE = Constants.GetFloat("INITIAL_SPAWN_RATE");
+        _INITIAL_DIFFICULTY_RATE = Constants.GetFloat("INITIAL_DIFFICULTY_RATE");
+
+        _difficultyRate = _INITIAL_DIFFICULTY_RATE;
+        _spawnRate = _INITIAL_SPAWN_RATE;
 
         // set difficulty to 1 if it is 0
         if(_difficulty == 0)
@@ -71,8 +86,8 @@ public class LevelManager : MonoBehaviour {
 
     public void PlayerRespawn()
     {
-        _difficulty = _initialDifficulty;
-        _spawnRate = _initialSpawnRate;
+        _difficulty = _INITIAL_DIFFICULTY_RATE;
+        _spawnRate = _INITIAL_SPAWN_RATE;
         _timeSinceLastIncrease = Time.time;
         _timeSinceLastSpawn = Time.time;
         GameObject[] tempCurrentObstacles;

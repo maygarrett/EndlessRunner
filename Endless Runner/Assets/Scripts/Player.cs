@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿// << Player >>
+// operating player abilities and inputs from user both PC and Mobile
+// author: Garrett May
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameData;
@@ -13,7 +17,7 @@ public class Player : MonoBehaviour {
 
     private Vector3 _initialScale;
 
-    private float _jumpForce;
+    private float _JUMPFORCE;
     private Vector2 _jumpVector;
 
     private bool _isGrounded;
@@ -25,10 +29,6 @@ public class Player : MonoBehaviour {
     private bool _startTimer;
     private Vector3 _mouseStartPos;
 
-    private void Awake()
-    {
-        Constants.Initialize();
-    }
 
     // Use this for initialization
     void Start () {
@@ -38,8 +38,8 @@ public class Player : MonoBehaviour {
         _elapsedTime = 0f;
 
         // assign constants
-        _jumpForce = Constants.GetFloat("JumpForce");
-        _jumpVector = new Vector2(0, _jumpForce);
+        _JUMPFORCE = Constants.GetFloat("JUMPFORCE");
+        _jumpVector = new Vector2(0, _JUMPFORCE);
         _MIN_SWIPE_LENGTH = Constants.GetFloat("MIN_SWIPE_LENGTH");
         _MAX_SWIPE_TIME = Constants.GetFloat("MIN_SWIPE_LENGTH");
     }
