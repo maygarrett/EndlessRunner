@@ -25,7 +25,6 @@ public class MenuManager : MonoBehaviour {
         optionsMenu.enabled = false;
         instructionsMenu.enabled = false;
         creditsMenu.enabled = false;
-        
     }
 	
 	// Update is called once per frame
