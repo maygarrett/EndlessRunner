@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
     
     private Rigidbody2D _rb;
     private LevelManager _levelManager;
+    private PauseManager _pauseManager;
 
     private Vector3 _initialScale;
 
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour {
     void Start () {
         _rb = GetComponent<Rigidbody2D>();
         _levelManager = GameObject.FindObjectOfType<LevelManager>();
+        _pauseManager = GameObject.FindObjectOfType<PauseManager>();
         _initialScale = transform.localScale;
         _elapsedTime = 0f;
 
@@ -56,12 +58,18 @@ public class Player : MonoBehaviour {
 	void Update () {
 
 #if UNITY_EDITOR
-        // PCControls();
-        SimulateMobileControls();
+        if (!_pauseManager.GetPaused())
+        {
+            // PCControls();
+            SimulateMobileControls();
+        }
 #endif
 
 #if UNITY_ANDROID || UNITY_IOS
-        MobileControls();
+        if(!pauseManager.GetPaused())
+        {
+            MobileControls();
+        }
 #endif
 
     }
@@ -146,7 +154,7 @@ public class Player : MonoBehaviour {
                 if (touch.deltaPosition.y < 0)
                     Slide();
             }
-            else if(touch.phase == TouchPhase.Ended)
+            else if(touch.phase == TouchPhase.Ended && touch.position.x > 0)
             {
                 FireProjectile(touch.position);
             }
@@ -187,7 +195,7 @@ public class Player : MonoBehaviour {
             if(direction.y <= 0)
                 Slide();
         }
-        else if(Input.GetMouseButtonUp(0))
+        else if(Input.GetMouseButtonUp(0) && Input.mousePosition.x > 0)
         {
             FireProjectile(Input.mousePosition);
         }
