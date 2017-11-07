@@ -28,6 +28,16 @@ public class SoundManager : MonoBehaviour {
     [SerializeField]
     private AudioMixer _audioMixer;
 
+
+    private void Awake()
+    {
+        // get audio mixers volume from playerprefs and set the mixer volumes to those values (Volume controls will set the sliders accordingly)
+
+
+
+    }
+
+
     // Use this for initialization
     void Start () {
         // instance singleton stuff
@@ -102,6 +112,27 @@ public class SoundManager : MonoBehaviour {
     public void SetMasterVolume(float pVolume)
     {
         _audioMixer.SetFloat("Master", pVolume);
+    }
+
+    public float GetMasterVolume()
+    {
+        float tempVolume;
+        _audioMixer.GetFloat("Master", out tempVolume);
+        return tempVolume;
+    }
+
+    public float GetMusicVolume()
+    {
+        float tempVolume;
+        _audioMixer.GetFloat("MusicVolume", out tempVolume);
+        return tempVolume;
+    }
+
+    public float GetSFXVolume()
+    {
+        float tempVolume;
+        _audioMixer.GetFloat("SFXVolume", out tempVolume);
+        return tempVolume;
     }
 
 }
