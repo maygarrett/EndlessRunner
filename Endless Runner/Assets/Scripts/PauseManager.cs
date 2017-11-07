@@ -29,11 +29,13 @@ public class PauseManager : MonoBehaviour {
     private void PauseGame()
     {
         _isPaused = true;
+        Time.timeScale = 0;
     }
 
     private void UnPauseGame()
     {
         _isPaused = false;
+        Time.timeScale = 1;
     }
 
     public void PauseButtonClicked()
@@ -44,5 +46,10 @@ public class PauseManager : MonoBehaviour {
     public void ResumeButtonClicked()
     {
         UnPauseGame();
+    }
+
+    public void MainMenuButton()
+    {
+        SceneManager.LoadScene(0);
     }
 }
