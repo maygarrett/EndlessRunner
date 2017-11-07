@@ -18,10 +18,14 @@ public class MenuManager : MonoBehaviour {
     [SerializeField]
     private Canvas creditsMenu;
 
+    private void Awake()
+    {
+
+    }
+
     // Use this for initialization
     void Start () {
-        SoundManager.instance.PlayMusic(SoundManager.instance.GetMenuMusic());
-        
+
         startMenu.enabled = true;
         optionsMenu.enabled = false;
         instructionsMenu.enabled = false;

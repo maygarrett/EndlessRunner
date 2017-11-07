@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour {
 
@@ -23,6 +24,10 @@ public class SoundManager : MonoBehaviour {
     public AudioClip returnClip;
     public AudioClip deathClip;
 
+    // audio mixer
+    [SerializeField]
+    private AudioMixer _audioMixer;
+
     // Use this for initialization
     void Start () {
         // instance singleton stuff
@@ -38,7 +43,7 @@ public class SoundManager : MonoBehaviour {
 
 
         // initialization
-
+        PlayMusic(_menuMusic);
     }
 	
 	// Update is called once per frame
@@ -82,6 +87,21 @@ public class SoundManager : MonoBehaviour {
     {
         _fxSource.clip = pClip;
         _fxSource.Play();
+    }
+
+    public void SetMusicVolume(float pVolume)
+    {
+        _audioMixer.SetFloat("MusicVolume", pVolume);
+    }
+
+    public void SetSFXVolume(float pVolume)
+    {
+        _audioMixer.SetFloat("SFXVolume", pVolume);
+    }
+
+    public void SetMasterVolume(float pVolume)
+    {
+        _audioMixer.SetFloat("Master", pVolume);
     }
 
 }
