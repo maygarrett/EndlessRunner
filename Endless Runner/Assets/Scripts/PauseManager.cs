@@ -11,8 +11,13 @@ public class PauseManager : MonoBehaviour {
 
     private bool _isPaused;
 
-	// Use this for initialization
-	void Start () {
+
+    private void Awake()
+    {
+        _pauseCanvas.enabled = false;
+    }
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -30,12 +35,14 @@ public class PauseManager : MonoBehaviour {
     {
         _isPaused = true;
         Time.timeScale = 0;
+        _pauseCanvas.enabled = true;
     }
 
     private void UnPauseGame()
     {
         _isPaused = false;
         Time.timeScale = 1;
+        _pauseCanvas.enabled = false;
     }
 
     public void PauseButtonClicked()
@@ -50,6 +57,7 @@ public class PauseManager : MonoBehaviour {
 
     public void MainMenuButton()
     {
+        UnPauseGame();
         SceneManager.LoadScene(0);
     }
 }
