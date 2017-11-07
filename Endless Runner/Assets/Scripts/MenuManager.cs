@@ -37,30 +37,36 @@ public class MenuManager : MonoBehaviour {
     {
         SceneManager.LoadScene("EndlessSideScroll");
         SoundManager.instance.PlayMusic(SoundManager.instance.GetGameMusic());
+        SoundManager.instance.PlaySoundEffect(SoundManager.instance.selectionClip);
     }
 
     public void OptionsMenu()
     {
         WhatScene().enabled = false;
         optionsMenu.enabled = true;
+        SoundManager.instance.PlaySoundEffect(SoundManager.instance.selectionClip);
     }
 
     public void InstructionsMenu()
     {
         WhatScene().enabled = false;
         instructionsMenu.enabled = true;
+        SoundManager.instance.PlaySoundEffect(SoundManager.instance.selectionClip);
     }
 
     public void CreditsMenu()
     {
         WhatScene().enabled = false;
         creditsMenu.enabled = true;
+        SoundManager.instance.PlaySoundEffect(SoundManager.instance.selectionClip);
     }
 
     public void MainMenu()
     {
         WhatScene().enabled = false;
         startMenu.enabled = true;
+        SoundManager.instance.PlaySoundEffect(SoundManager.instance.returnClip);
+
     }
 
     private Canvas WhatScene()

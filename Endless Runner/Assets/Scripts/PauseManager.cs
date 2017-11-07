@@ -62,5 +62,6 @@ public class PauseManager : MonoBehaviour {
         UnPauseGame();
         SceneManager.LoadScene(0);
         SoundManager.instance.PlayMusic(SoundManager.instance.GetMenuMusic());
+        SoundManager.instance.PlaySoundEffect(SoundManager.instance.returnClip);
     }
 }

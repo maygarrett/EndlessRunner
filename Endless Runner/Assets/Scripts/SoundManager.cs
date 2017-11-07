@@ -6,13 +6,22 @@ public class SoundManager : MonoBehaviour {
 
     private static SoundManager _instance = null;
 
+    // music clips
     [SerializeField]
     private AudioClip _menuMusic;
     [SerializeField]
     private AudioClip _gameMusic;
 
+    // audio sources
     [SerializeField]
     private AudioSource _musicSource;
+    [SerializeField]
+    private AudioSource _fxSource;
+
+    // sound effect clips
+    public AudioClip selectionClip;
+    public AudioClip returnClip;
+    public AudioClip deathClip;
 
     // Use this for initialization
     void Start () {
@@ -43,9 +52,9 @@ public class SoundManager : MonoBehaviour {
         set { _instance = value; }
     }
 
-    public void PlayMusic(AudioClip clip)
+    public void PlayMusic(AudioClip pClip)
     {
-        _musicSource.clip = clip;
+        _musicSource.clip = pClip;
         _musicSource.Play();
     }
 
@@ -68,4 +77,11 @@ public class SoundManager : MonoBehaviour {
     {
         _musicSource.UnPause();
     }
+
+    public void PlaySoundEffect(AudioClip pClip)
+    {
+        _fxSource.clip = pClip;
+        _fxSource.Play();
+    }
+
 }

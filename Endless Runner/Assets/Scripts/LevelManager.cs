@@ -90,6 +90,7 @@ public class LevelManager : MonoBehaviour {
 
     public void PlayerRespawn()
     {
+        SoundManager.instance.PlaySoundEffect(SoundManager.instance.deathClip);
         _difficulty = _INITIAL_DIFFICULTY_RATE;
         _spawnRate = _INITIAL_SPAWN_RATE;
         _timeSinceLastIncrease = Time.time;
