@@ -23,11 +23,18 @@ public class Player : MonoBehaviour {
     private bool _isGrounded;
 
     // mobile swipe input variables
-    private float _MIN_SWIPE_LENGTH;
+    private float _MIN_SWIPE_TIME;
     private float _MAX_SWIPE_TIME;
     private float _elapsedTime;
     private bool _startTimer;
     private Vector3 _mouseStartPos;
+
+    // projectile Stuff
+    [SerializeField]
+    private GameObject _projectilePrefab;
+    [SerializeField]
+    private Transform _projectileSpawnPoint;
+    private float _PROJECTILE_FORCE;
 
 
     // Use this for initialization
@@ -40,8 +47,9 @@ public class Player : MonoBehaviour {
         // assign constants
         _JUMPFORCE = Constants.GetFloat("JUMPFORCE");
         _jumpVector = new Vector2(0, _JUMPFORCE);
-        _MIN_SWIPE_LENGTH = Constants.GetFloat("MIN_SWIPE_LENGTH");
-        _MAX_SWIPE_TIME = Constants.GetFloat("MIN_SWIPE_LENGTH");
+        _MIN_SWIPE_TIME = Constants.GetFloat("MIN_SWIPE_TIME");
+        _MAX_SWIPE_TIME = Constants.GetFloat("MAX_SWIPE_TIME");
+        _PROJECTILE_FORCE = Constants.GetFloat("PROJECTILE_FORCE");
     }
 	
 	// Update is called once per frame
@@ -87,13 +95,17 @@ public class Player : MonoBehaviour {
 
     private void Slide()
     {
-        transform.localScale = new Vector3(_initialScale.x, _initialScale.y / 2, _initialScale.z);
-        StartCoroutine("Resize");
+        if (_isGrounded)
+        {
+            transform.localScale = new Vector3(_initialScale.x, _initialScale.y / 2, _initialScale.z);
+            StartCoroutine("Resize");
+        }
     }
 
     private void Jump()
     {
-        _rb.AddForce(_jumpVector);
+        if(_isGrounded)
+            _rb.AddForce(_jumpVector);
     }
 
     private void PCControls()
@@ -124,15 +136,19 @@ public class Player : MonoBehaviour {
                 _elapsedTime = 0f;
             }
             // if the touch ends and elapsed time was less that max swipe time
-            if (touch.phase == TouchPhase.Ended && _elapsedTime < _MAX_SWIPE_TIME)
+            if (touch.phase == TouchPhase.Ended && _elapsedTime < _MAX_SWIPE_TIME && _elapsedTime > _MIN_SWIPE_TIME)
             {
                 // if swipe was up
                 if (touch.deltaPosition.y > 0)
                     Jump();
 
                 // if swipe was down
-                if (touch.deltaPosition.y <= 0)
+                if (touch.deltaPosition.y < 0)
                     Slide();
+            }
+            else if(touch.phase == TouchPhase.Ended)
+            {
+                FireProjectile(touch.position);
             }
         }
         // calculate time spent swiping
@@ -158,9 +174,10 @@ public class Player : MonoBehaviour {
             _startTimer = true;
             _elapsedTime = 0f;
         }
-        if (Input.GetMouseButtonUp(0) && _elapsedTime < _MAX_SWIPE_TIME)
+        if (Input.GetMouseButtonUp(0) && _elapsedTime < _MAX_SWIPE_TIME && _elapsedTime > _MIN_SWIPE_TIME)
         {
             _startTimer = false;
+
             Vector3 mouseEndPos = Input.mousePosition;
             Vector3 direction = (mouseEndPos - _mouseStartPos);
             // if swipe was up
@@ -170,6 +187,37 @@ public class Player : MonoBehaviour {
             if(direction.y <= 0)
                 Slide();
         }
+        else if(Input.GetMouseButtonUp(0))
+        {
+            FireProjectile(Input.mousePosition);
+        }
+        // calculate time spent swiping
+        if (_startTimer)
+        {
+            if (_elapsedTime < _MAX_SWIPE_TIME)
+            {
+                _elapsedTime += Time.deltaTime;
+            }
+            if (_elapsedTime >= _MAX_SWIPE_TIME)
+            {
+                _startTimer = false;
+            }
+        }
+    }
+
+    private void FireProjectile(Vector2 pFireDirection)
+    {
+        // instantiate the projectile
+        GameObject tempProjectile = Instantiate(_projectilePrefab, _projectileSpawnPoint.position, _projectileSpawnPoint.rotation);
+        //calculate force/direction
+        Vector2 tempForceDirection = pFireDirection - new Vector2(_projectileSpawnPoint.position.x, _projectileSpawnPoint.position.y);
+        Debug.Log(tempForceDirection);
+        Vector2 tempForceDirectionNormalized = tempForceDirection.normalized;
+        Debug.Log(tempForceDirectionNormalized);
+        Vector2 tempProjectileForce = tempForceDirectionNormalized * _PROJECTILE_FORCE;
+        Debug.Log(tempProjectileForce);
+        // apply force to the projectile
+        tempProjectile.GetComponent<Rigidbody2D>().AddForce(tempProjectileForce);
     }
 
 

@@ -30,6 +30,9 @@ public class LevelManager : MonoBehaviour {
     private GameObject _jumpObstacle;
     [SerializeField]
     private GameObject _slideObstacle;
+    [SerializeField]
+    private GameObject _tapObstacle;
+
     private GameObject[] _obstacles;
 
     // obstacle spawnpoints
@@ -37,6 +40,8 @@ public class LevelManager : MonoBehaviour {
     private GameObject _jumpSpawnPoint;
     [SerializeField]
     private GameObject _slideSpawnPoint;
+    [SerializeField]
+    private GameObject _tapSpawnPoint;
 
     // score management
     [SerializeField]
@@ -58,9 +63,10 @@ public class LevelManager : MonoBehaviour {
         }
 
         // set up array of obstacles and add in obstacles
-        _obstacles = new GameObject[2];
+        _obstacles = new GameObject[3];
         _obstacles[0] = _jumpObstacle;
         _obstacles[1] = _slideObstacle;
+        _obstacles[2] = _tapObstacle;
 
 		
 	}
@@ -101,7 +107,7 @@ public class LevelManager : MonoBehaviour {
 
     private void SpawnObstacle()
     {
-        int tempNumber = Mathf.FloorToInt(Random.Range(0.000001f, 2.0f));
+        int tempNumber = Mathf.FloorToInt(Random.Range(0.000001f, _obstacles.Length));
         switch (tempNumber)
         {
             case 0:
@@ -111,6 +117,9 @@ public class LevelManager : MonoBehaviour {
             case 1:
                 Instantiate(_obstacles[tempNumber], _slideSpawnPoint.transform.position, _slideSpawnPoint.transform.rotation);
                 // print("spawning slide obstacle");
+                break;
+            case 2:
+                Instantiate(_obstacles[tempNumber], _tapSpawnPoint.transform.position, _tapSpawnPoint.transform.rotation);
                 break;
         }
     }

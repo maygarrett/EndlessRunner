@@ -5,28 +5,41 @@ using GameData;
 
 public class Obstacle : MonoBehaviour {
 
-    private float _SPEED = -5;
+    private float _SPEED;
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField]
+    private Rigidbody2D _rb;
+
+    private Vector2 _force;
+
+    // Use this for initialization
+    void Start()
+    {
         _SPEED = Constants.GetFloat("SPEED");
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        _force = new Vector2(_SPEED, 0);
+        _rb.AddForce(_force);
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
-
-    private void FixedUpdate()
-    {
-        transform.Translate(_SPEED / 30, 0, 0);
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
         if (collision.gameObject.tag == "DestroyObstacle")
         {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Projectile")
+        {
+            GameObject.Find("ScoreManager").GetComponent<ScoreManager>().AddOneToScore();
+            Destroy(collision.gameObject);
             Destroy(gameObject);
         }
     }
