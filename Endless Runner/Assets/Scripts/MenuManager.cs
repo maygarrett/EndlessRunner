@@ -20,6 +20,7 @@ public class MenuManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        SoundManager.instance.PlayMusic(SoundManager.instance.GetMenuMusic());
         
         startMenu.enabled = true;
         optionsMenu.enabled = false;
@@ -35,6 +36,7 @@ public class MenuManager : MonoBehaviour {
     public void StartGame()
     {
         SceneManager.LoadScene("EndlessSideScroll");
+        SoundManager.instance.PlayMusic(SoundManager.instance.GetGameMusic());
     }
 
     public void OptionsMenu()

@@ -13,13 +13,13 @@ public class CSVManager : MonoBehaviour {
 
     private void Awake()
     {
-        if (instance)               // checking the instance getters and setters to see if they exist
+        if (instance)
         {
-            DestroyImmediate(gameObject);    // if they do, destroy the object
+            DestroyImmediate(gameObject); 
         }
         else
         {
-            instance = this;             // otherwise if instance is this current object, don't destroy
+            instance = this; 
 
             DontDestroyOnLoad(this);
         }
@@ -30,9 +30,9 @@ public class CSVManager : MonoBehaviour {
         Constants.Initialize();
     }
 
-    private static CSVManager instance             // getters and setters function instance  // creating a public function to get and set value _instance
+    private static CSVManager instance 
     {
-        get { return _instance; }              // can also use just " get; "
+        get { return _instance; } 
         set { _instance = value; }
     }
 

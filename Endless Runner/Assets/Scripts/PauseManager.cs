@@ -36,6 +36,7 @@ public class PauseManager : MonoBehaviour {
         _isPaused = true;
         Time.timeScale = 0;
         _pauseCanvas.enabled = true;
+        SoundManager.instance.PauseMusic();
     }
 
     private void UnPauseGame()
@@ -43,6 +44,7 @@ public class PauseManager : MonoBehaviour {
         _isPaused = false;
         Time.timeScale = 1;
         _pauseCanvas.enabled = false;
+        SoundManager.instance.ResumeMusic();
     }
 
     public void PauseButtonClicked()
@@ -59,5 +61,6 @@ public class PauseManager : MonoBehaviour {
     {
         UnPauseGame();
         SceneManager.LoadScene(0);
+        SoundManager.instance.PlayMusic(SoundManager.instance.GetMenuMusic());
     }
 }

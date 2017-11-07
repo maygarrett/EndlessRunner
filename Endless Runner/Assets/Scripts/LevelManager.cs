@@ -103,6 +103,8 @@ public class LevelManager : MonoBehaviour {
         }
 
         _scoreManager.SetScore(0);
+
+        SoundManager.instance.PlayMusic(SoundManager.instance.GetGameMusic());
     }
 
     private void SpawnObstacle()
