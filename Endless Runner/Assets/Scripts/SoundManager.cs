@@ -28,26 +28,32 @@ public class SoundManager : MonoBehaviour {
     [SerializeField]
     private AudioMixer _audioMixer;
 
+    // playerpref const keys
+    private const string _MASTER_VOLUME_KEY = "MasterVolume";
+    private const string _MUSIC_VOLUME_KEY = "MusicVolume";
+    private const string _SFX_VOLUME_KEY = "SFXVolume";
+
+
+
+
 
     private void Awake()
     {
         // get audio mixers volume from playerprefs and set the mixer volumes to those values (Volume controls will set the sliders accordingly)
-
-
-
+        LoadVolumeSettings();
     }
 
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         // instance singleton stuff
-        if (instance) 
+        if (instance)
         {
             DestroyImmediate(gameObject);
         }
         else
         {
-            instance = this;  
+            instance = this;
             DontDestroyOnLoad(this);
         }
 
@@ -55,15 +61,15 @@ public class SoundManager : MonoBehaviour {
         // initialization
         PlayMusic(_menuMusic);
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-    public static SoundManager instance 
+    // Update is called once per frame
+    void Update() {
+
+    }
+
+    public static SoundManager instance
     {
-        get { return _instance; }   
+        get { return _instance; }
         set { _instance = value; }
     }
 
@@ -107,6 +113,7 @@ public class SoundManager : MonoBehaviour {
     public void SetSFXVolume(float pVolume)
     {
         _audioMixer.SetFloat("SFXVolume", pVolume);
+        
     }
 
     public void SetMasterVolume(float pVolume)
@@ -134,5 +141,20 @@ public class SoundManager : MonoBehaviour {
         _audioMixer.GetFloat("SFXVolume", out tempVolume);
         return tempVolume;
     }
+
+    public void SaveVolumeSettings()
+    {
+        PlayerPrefs.SetFloat(_MASTER_VOLUME_KEY, GetMasterVolume());
+        PlayerPrefs.SetFloat(_MUSIC_VOLUME_KEY, GetMusicVolume());
+        PlayerPrefs.SetFloat(_SFX_VOLUME_KEY, GetSFXVolume());
+    }
+
+    public void LoadVolumeSettings()
+    {
+        SetMasterVolume(PlayerPrefs.GetFloat(_MASTER_VOLUME_KEY));
+        SetMusicVolume(PlayerPrefs.GetFloat(_MUSIC_VOLUME_KEY));
+        SetSFXVolume(PlayerPrefs.GetFloat(_SFX_VOLUME_KEY));
+    }
+
 
 }

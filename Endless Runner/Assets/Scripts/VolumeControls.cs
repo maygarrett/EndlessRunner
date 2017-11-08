@@ -22,8 +22,6 @@ public class VolumeControls : MonoBehaviour {
         {
             Debug.LogError("Having trouble finding SoundManager");
         }
-
-        UpdateSliderValues();
 	}
 	
 	// Update is called once per frame
@@ -54,11 +52,15 @@ public class VolumeControls : MonoBehaviour {
         UpdateSliderValues();
     }
 
-    private void UpdateSliderValues()
+    public void UpdateSliderValues()
     {
         _masterVolumeSlider.value = _soundManager.GetMasterVolume();
         _musicVolumeSlider.value = _soundManager.GetMusicVolume();
         _sfxVolumeSlider.value = _soundManager.GetSFXVolume();
     }
-    
+
+    public void SaveVolume()
+    {
+        SoundManager.instance.SaveVolumeSettings();
+    }
 }
