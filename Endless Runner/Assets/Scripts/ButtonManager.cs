@@ -30,6 +30,14 @@ public class ButtonManager : MonoBehaviour {
     private Text _INSTRUCTIONS_TITLE;
     [SerializeField]
     private Text _INSTRUCTIONS_TEXT;
+    [SerializeField]
+    private Text _MASTER_VOLUME_TEXT;
+    [SerializeField]
+    private Text _MUSIC_VOLUME_TEXT;
+    [SerializeField]
+    private Text _SFX_VOLUME_TEXT;
+    [SerializeField]
+    private Text _RESET_DEFAULTS_BUTTON;
 
     // Use this for initialization
     void Start () {
@@ -46,6 +54,10 @@ public class ButtonManager : MonoBehaviour {
         _INSTRUCTIONS_BUTTON.text = Localization.GetString("INSTRUCTIONS");
         _INSTRUCTIONS_TITLE.text = Localization.GetString("INSTRUCTIONS");
         _INSTRUCTIONS_TEXT.text = Localization.GetString("INSTRUCTIONS_TEXT");
+        _MASTER_VOLUME_TEXT.text = Localization.GetString("MASTER_VOLUME");
+        _MUSIC_VOLUME_TEXT.text = Localization.GetString("MUSIC_VOLUME");
+        _SFX_VOLUME_TEXT.text = Localization.GetString("SFX_VOLUME");
+        _RESET_DEFAULTS_BUTTON.text = Localization.GetString("RESET_DEFAULTS");
     }
 	
 	// Update is called once per frame

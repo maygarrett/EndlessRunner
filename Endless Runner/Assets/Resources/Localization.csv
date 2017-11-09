@@ -6,3 +6,7 @@ OPTIONS_MENU,STRING,Options Menu,French Options Menu,German Options Menu,Spanish
 CREDITS,STRING,Credits,French Credits,German Credits,Spanish Credits
 INSTRUCTIONS,STRING,Instructions,French Instructions,German Instructions,Spanish Instructions
 INSTRUCTIONS_TEXT,STRING,Swipe Up to Jump! Swipe Down to Slide! Tap to shoot projectile! Watch out for obstacles! See how long you can last and beat the high score!,Balayez vers le haut pour sauter! Balayez vers le bas pour glisser! Appuyez pour tirer le projectile! Attention aux obstacles! Voyez combien de temps vous pouvez durer et battre le meilleur score!,Wische nach oben um zu springen! Wische nach unten um zu schieben! Tippen Sie um Projektil zu schießen! Achte auf Hindernisse! Sehen Sie wie lange Sie halten und den Highscore schlagen können!,Desliza el dedo hacia arriba para saltar Desliza hacia abajo para deslizar! Toca para disparar proyectil! ¡Cuidado con los obstáculos! ¡Vea cuánto tiempo puede durar y superar el puntaje más alto!
+MASTER_VOLUME,STRING,Master Volume,French Master Volume,German Master Volume,Spanish Master Volume
+MUSIC_VOLUME,STRING,Music Volume,French Music Volume,German Music Volume,Spanish Music Volume
+SFX_VOLUME,STRING,Sound Effects Volume,French Sound Effects Volume,German Sound Effects Volume,Spanish Sound Effects Volume
+RESET_DEFAULTS,STRING,Reset To Defaults,French Reset to Defaults,German Reset to Defaults,Spanish Reset to Defaults
