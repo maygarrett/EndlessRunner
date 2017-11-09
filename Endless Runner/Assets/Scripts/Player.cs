@@ -65,6 +65,14 @@ public class Player : MonoBehaviour {
         }
 #endif
 
+#if UNITY_STANDALONE_WIN
+        if (!_pauseManager.GetPaused())
+        {
+            // PCControls();
+            SimulateMobileControls();
+        }
+#endif
+
 #if UNITY_ANDROID || UNITY_IOS
         if(!pauseManager.GetPaused())
         {
