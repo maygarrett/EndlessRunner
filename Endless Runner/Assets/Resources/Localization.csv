@@ -1,7 +1,7 @@
 KEY,TYPE,VALUE,FRENCHVALUE,GERMANVALUE,SPANISHVALUE
 TITLE,STRING,Endless Runner,French Endless Runner,German Endless Runner,Spanish Endless Runner
 MAIN_MENU,STRING,Main Menu,French Main Menu,German Main Menu,Spanish Main Menu
-START_GAME,STRING,Start Game,French Start Game,German Start Game,Spanish Start Game
+START_GAME,STRING,English Start Game,French Start Game,German Start Game,Spanish Start Game
 OPTIONS_MENU,STRING,Options Menu,French Options Menu,German Options Menu,Spanish Options Menu
 CREDITS,STRING,Credits,French Credits,German Credits,Spanish Credits
 INSTRUCTIONS,STRING,Instructions,French Instructions,German Instructions,Spanish Instructions

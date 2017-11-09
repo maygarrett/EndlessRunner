@@ -19,12 +19,12 @@ public class LocalizationManager : MonoBehaviour {
 
             DontDestroyOnLoad(this);
         }
+        Localization.Initialize();
     }
 
     private void Start()
     {
         //Constants.Initialize();
-        Localization.Initialize();
     }
 
     private static LocalizationManager instance
