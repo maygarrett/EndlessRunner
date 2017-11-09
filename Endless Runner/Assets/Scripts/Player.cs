@@ -68,8 +68,8 @@ public class Player : MonoBehaviour {
 #if UNITY_STANDALONE_WIN
         if (!_pauseManager.GetPaused())
         {
-            // PCControls();
-            SimulateMobileControls();
+            PCControls();
+            // SimulateMobileControls();
         }
 #endif
 
@@ -234,9 +234,14 @@ public class Player : MonoBehaviour {
         //Debug.Log(tempProjectileForce);
         // apply force to the projectile
         tempProjectile.GetComponent<Rigidbody2D>().AddForce(tempProjectileForce);
+        StartCoroutine(DestroyProjectile(tempProjectile));
     }
 
-
+    private IEnumerator DestroyProjectile(GameObject pDestroyThis)
+    {
+        yield return new WaitForSeconds(3.0f);
+        Destroy(pDestroyThis);
+    }
 
 
 

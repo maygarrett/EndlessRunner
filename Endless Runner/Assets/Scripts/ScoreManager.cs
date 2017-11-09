@@ -11,18 +11,25 @@ public class ScoreManager : MonoBehaviour {
 
     [SerializeField]
     private Text _scoreText;
+    [SerializeField]
+    private Text _highScoreText;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         _INITIAL_SCORE = Constants.GetInt("INITIAL_SCORE");
 
         _score = _INITIAL_SCORE;
         UpdateScoreText();
+        UpdateHighScoreText();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(_score > HighScoreManager.instance.GetHighScore())
+        {
+            HighScoreManager.instance.SetHighScore(_score);
+            UpdateHighScoreText();
+        }
 	}
 
     public int GetScore()
@@ -55,4 +62,11 @@ public class ScoreManager : MonoBehaviour {
             AddOneToScore();
         }
     }
+
+    private void UpdateHighScoreText()
+    {
+        _highScoreText.text = "High Score: " + HighScoreManager.instance.GetHighScore();
+    }
+
+    
 }
