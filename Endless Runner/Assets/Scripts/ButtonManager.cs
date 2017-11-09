@@ -14,10 +14,13 @@ public class ButtonManager : MonoBehaviour {
     private Text _INSTRUCTIONS_MAIN_MENU;
     [SerializeField]
     private Text _CREDITS_MAIN_MENU;
+    [SerializeField]
+    private Text _TITLE;
 
     // Use this for initialization
     void Start () {
         // assign localized texts
+        _TITLE.text = Localization.GetString("TITLE");
         _START_GAME.text = Localization.GetString("START_GAME");
         _OPTIONS_MAIN_MENU.text = Localization.GetString("MAIN_MENU");
         _INSTRUCTIONS_MAIN_MENU.text = Localization.GetString("MAIN_MENU");
