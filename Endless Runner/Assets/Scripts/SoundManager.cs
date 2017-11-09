@@ -40,7 +40,7 @@ public class SoundManager : MonoBehaviour {
     private void Awake()
     {
         // get audio mixers volume from playerprefs and set the mixer volumes to those values (Volume controls will set the sliders accordingly)
-        LoadVolumeSettings();
+
     }
 
 
@@ -148,13 +148,5 @@ public class SoundManager : MonoBehaviour {
         PlayerPrefs.SetFloat(_MUSIC_VOLUME_KEY, GetMusicVolume());
         PlayerPrefs.SetFloat(_SFX_VOLUME_KEY, GetSFXVolume());
     }
-
-    public void LoadVolumeSettings()
-    {
-        SetMasterVolume(PlayerPrefs.GetFloat(_MASTER_VOLUME_KEY));
-        SetMusicVolume(PlayerPrefs.GetFloat(_MUSIC_VOLUME_KEY));
-        SetSFXVolume(PlayerPrefs.GetFloat(_SFX_VOLUME_KEY));
-    }
-
 
 }

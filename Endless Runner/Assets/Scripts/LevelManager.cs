@@ -91,7 +91,7 @@ public class LevelManager : MonoBehaviour {
     public void PlayerRespawn()
     {
         SoundManager.instance.PlaySoundEffect(SoundManager.instance.deathClip);
-        _difficulty = _INITIAL_DIFFICULTY_RATE;
+        _difficultyRate = _INITIAL_DIFFICULTY_RATE;
         _spawnRate = _INITIAL_SPAWN_RATE;
         _timeSinceLastIncrease = Time.time;
         _timeSinceLastSpawn = Time.time;
@@ -129,7 +129,6 @@ public class LevelManager : MonoBehaviour {
 
     private void IncreaseDifficulty()
     {
-        _difficulty += 0.2f;
         if(_spawnRate != 0.1)
             _spawnRate -= 0.1f;
         Debug.Log("New Difficulty Rating is: " + _difficulty);

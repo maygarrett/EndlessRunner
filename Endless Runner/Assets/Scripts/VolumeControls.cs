@@ -59,8 +59,4 @@ public class VolumeControls : MonoBehaviour {
         _sfxVolumeSlider.value = _soundManager.GetSFXVolume();
     }
 
-    public void SaveVolume()
-    {
-        SoundManager.instance.SaveVolumeSettings();
-    }
 }
