@@ -19,7 +19,17 @@ public class ButtonManager : MonoBehaviour {
     [SerializeField]
     private Text _OPTIONS_BUTTON;
     [SerializeField]
-    private Text _OPTIONS_TEXT;
+    private Text _OPTIONS_TITLE;
+    [SerializeField]
+    private Text _CREDITS_BUTTON;
+    [SerializeField]
+    private Text _CREDITS_TITLE;
+    [SerializeField]
+    private Text _INSTRUCTIONS_BUTTON;
+    [SerializeField]
+    private Text _INSTRUCTIONS_TITLE;
+    [SerializeField]
+    private Text _INSTRUCTIONS_TEXT;
 
     // Use this for initialization
     void Start () {
@@ -30,7 +40,12 @@ public class ButtonManager : MonoBehaviour {
         _INSTRUCTIONS_MAIN_MENU.text = Localization.GetString("MAIN_MENU");
         _CREDITS_MAIN_MENU.text = Localization.GetString("MAIN_MENU");
         _OPTIONS_BUTTON.text = Localization.GetString("OPTIONS_MENU");
-        _OPTIONS_TEXT.text = Localization.GetString("OPTIONS_MENU");
+        _OPTIONS_TITLE.text = Localization.GetString("OPTIONS_MENU");
+        _CREDITS_BUTTON.text = Localization.GetString("CREDITS");
+        _CREDITS_TITLE.text = Localization.GetString("CREDITS");
+        _INSTRUCTIONS_BUTTON.text = Localization.GetString("INSTRUCTIONS");
+        _INSTRUCTIONS_TITLE.text = Localization.GetString("INSTRUCTIONS");
+        _INSTRUCTIONS_TEXT.text = Localization.GetString("INSTRUCTIONS_TEXT");
     }
 	
 	// Update is called once per frame
