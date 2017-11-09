@@ -219,11 +219,11 @@ public class Player : MonoBehaviour {
         GameObject tempProjectile = Instantiate(_projectilePrefab, _projectileSpawnPoint.position, _projectileSpawnPoint.rotation);
         //calculate force/direction
         Vector2 tempForceDirection = pFireDirection - new Vector2(_projectileSpawnPoint.position.x, _projectileSpawnPoint.position.y);
-        Debug.Log(tempForceDirection);
+        //Debug.Log(tempForceDirection);
         Vector2 tempForceDirectionNormalized = tempForceDirection.normalized;
-        Debug.Log(tempForceDirectionNormalized);
+        //Debug.Log(tempForceDirectionNormalized);
         Vector2 tempProjectileForce = tempForceDirectionNormalized * _PROJECTILE_FORCE;
-        Debug.Log(tempProjectileForce);
+        //Debug.Log(tempProjectileForce);
         // apply force to the projectile
         tempProjectile.GetComponent<Rigidbody2D>().AddForce(tempProjectileForce);
     }
