@@ -13,6 +13,13 @@ public class VolumeControls : MonoBehaviour {
     [SerializeField]
     private Slider _sfxVolumeSlider;
 
+    [SerializeField]
+    private Button _musicToggleButton;
+    [SerializeField]
+    private Button _sfxToggleButton;
+    
+    
+
     private void Awake()
     {
         UpdateSliderValuesWithPlayerPrefs();
@@ -20,8 +27,9 @@ public class VolumeControls : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
-	}
+        _musicToggleButton.onClick.AddListener(ToggleMusic);
+        _sfxToggleButton.onClick.AddListener(ToggleSFX);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -56,6 +64,8 @@ public class VolumeControls : MonoBehaviour {
         _masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume");
         _musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume");
         _sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume");
+        MusicTextStart();
+        SFXTextStart();
     }
 
     public void UpdateSliderValuesWithCurrentVolume()
@@ -70,4 +80,55 @@ public class VolumeControls : MonoBehaviour {
         SoundManager.instance.SaveVolumeSettings();
     }
 
+    void ToggleMusic()
+    {
+        if (SoundManager.instance.GetMusicVolume() < -29)
+        {
+            _musicVolumeSlider.value = 0;
+            _musicToggleButton.GetComponentInChildren<Text>().text = "Music ON";
+        }
+        else
+        {
+            _musicVolumeSlider.value = -30;
+            _musicToggleButton.GetComponentInChildren<Text>().text = "Music OFF";
+        }
+    }
+
+    private void MusicTextStart()
+    {
+        if (SoundManager.instance.GetMusicVolume() < -29)
+        {
+            _musicToggleButton.GetComponentInChildren<Text>().text = "Music OFF";
+        }
+        else
+        {
+            _musicToggleButton.GetComponentInChildren<Text>().text = "Music ON";
+        }
+    }
+
+    void ToggleSFX()
+    {
+        if (SoundManager.instance.GetSFXVolume() < -29)
+        {
+            _sfxVolumeSlider.value = 0;
+            _sfxToggleButton.GetComponentInChildren<Text>().text = "Sounds ON";
+        }
+        else
+        {
+            _sfxVolumeSlider.value = -30;
+            _sfxToggleButton.GetComponentInChildren<Text>().text = "Sounds OFF";
+        }
+    }
+
+    private void SFXTextStart()
+    {
+        if (SoundManager.instance.GetSFXVolume() < -29)
+        {
+            _musicToggleButton.GetComponentInChildren<Text>().text = "Sounds OFF";
+        }
+        else
+        {
+            _musicToggleButton.GetComponentInChildren<Text>().text = "Sounds ON";
+        }
+    }
 }

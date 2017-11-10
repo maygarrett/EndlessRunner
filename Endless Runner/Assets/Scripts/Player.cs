@@ -221,6 +221,7 @@ public class Player : MonoBehaviour {
         }
     }
 
+    // under construction
     private void FireProjectile(Vector2 pFireDirection)
     {
         // instantiate the projectile

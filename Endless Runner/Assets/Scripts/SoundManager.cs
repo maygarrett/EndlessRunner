@@ -33,7 +33,13 @@ public class SoundManager : MonoBehaviour {
     private const string _MUSIC_VOLUME_KEY = "MusicVolume";
     private const string _SFX_VOLUME_KEY = "SFXVolume";
 
-    private bool updated = false;
+    // mixer channel keys
+    private const string _MASTER_MIXER_KEY = "Master";
+    private const string _MUSIC_MIXER_KEY = "MusicVolume";
+    private const string _SFX_MIXER_KEY = "SFXVolume";
+
+    // update bool used in update once
+    private bool _updated = false;
 
 
 
@@ -61,10 +67,10 @@ public class SoundManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (!updated)
+        if (!_updated)
         {
             UpdateCurrentVolumeWithPlayerPrefs();
-            updated = true;
+            _updated = true;
         }
             
     }
@@ -109,38 +115,38 @@ public class SoundManager : MonoBehaviour {
 
     public void SetMusicVolume(float pVolume)
     {
-        _audioMixer.SetFloat("MusicVolume", pVolume);
+        _audioMixer.SetFloat(_MUSIC_MIXER_KEY, pVolume);
     }
 
     public void SetSFXVolume(float pVolume)
     {
-        _audioMixer.SetFloat("SFXVolume", pVolume);
+        _audioMixer.SetFloat(_SFX_MIXER_KEY, pVolume);
         
     }
 
     public void SetMasterVolume(float pVolume)
     {
-        _audioMixer.SetFloat("Master", pVolume);
+        _audioMixer.SetFloat(_MASTER_MIXER_KEY, pVolume);
     }
 
     public float GetMasterVolume()
     {
         float tempVolume;
-        _audioMixer.GetFloat("Master", out tempVolume);
+        _audioMixer.GetFloat(_MASTER_MIXER_KEY, out tempVolume);
         return tempVolume;
     }
 
     public float GetMusicVolume()
     {
         float tempVolume;
-        _audioMixer.GetFloat("MusicVolume", out tempVolume);
+        _audioMixer.GetFloat(_MUSIC_MIXER_KEY, out tempVolume);
         return tempVolume;
     }
 
     public float GetSFXVolume()
     {
         float tempVolume;
-        _audioMixer.GetFloat("SFXVolume", out tempVolume);
+        _audioMixer.GetFloat(_SFX_MIXER_KEY, out tempVolume);
         return tempVolume;
     }
 
@@ -150,20 +156,13 @@ public class SoundManager : MonoBehaviour {
         PlayerPrefs.SetFloat(_MASTER_VOLUME_KEY, GetMasterVolume());
         PlayerPrefs.SetFloat(_MUSIC_VOLUME_KEY, GetMusicVolume());
         PlayerPrefs.SetFloat(_SFX_VOLUME_KEY, GetSFXVolume());
-        Debug.Log(PlayerPrefs.GetFloat(_MASTER_VOLUME_KEY));
     }
 
     public void UpdateCurrentVolumeWithPlayerPrefs()
     {
-        _audioMixer.SetFloat("Master", PlayerPrefs.GetFloat("MasterVolume"));
-        /* tempNumber = PlayerPrefs.GetFloat(_MASTER_VOLUME_KEY);
-        Debug.Log("tempNumber: " + tempNumber);
-        Debug.Log("Player prefs master volume number: " + PlayerPrefs.GetFloat(_MASTER_VOLUME_KEY));
-        SetMasterVolume(tempNumber);
-        // above junk was working when placed in update */
-
-        _audioMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicVolume"));
-        _audioMixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("SFXVolume"));
+        _audioMixer.SetFloat(_MASTER_MIXER_KEY, PlayerPrefs.GetFloat(_MASTER_VOLUME_KEY));
+        _audioMixer.SetFloat(_MUSIC_MIXER_KEY, PlayerPrefs.GetFloat(_MUSIC_VOLUME_KEY));
+        _audioMixer.SetFloat(_SFX_MIXER_KEY, PlayerPrefs.GetFloat(_SFX_VOLUME_KEY));
     }
 
 }
