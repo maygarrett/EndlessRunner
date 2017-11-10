@@ -17,12 +17,14 @@ public class VolumeControls : MonoBehaviour {
     private Button _musicToggleButton;
     [SerializeField]
     private Button _sfxToggleButton;
-    
+
+    private bool _updated;
     
 
     private void Awake()
     {
         UpdateSliderValuesWithPlayerPrefs();
+        SoundManager.instance.UpdateCurrentVolumeWithPlayerPrefs();
     }
 
     // Use this for initialization
@@ -33,8 +35,12 @@ public class VolumeControls : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if (!_updated)
+        {
+            SoundManager.instance.UpdateCurrentVolumeWithPlayerPrefs();
+            _updated = true;
+        }
+    }
 
     public void ChangeMusicVolume(float pVolume)
     {
@@ -124,11 +130,11 @@ public class VolumeControls : MonoBehaviour {
     {
         if (SoundManager.instance.GetSFXVolume() < -29)
         {
-            _musicToggleButton.GetComponentInChildren<Text>().text = "Sounds OFF";
+            _sfxToggleButton.GetComponentInChildren<Text>().text = "Sounds OFF";
         }
         else
         {
-            _musicToggleButton.GetComponentInChildren<Text>().text = "Sounds ON";
+            _sfxToggleButton.GetComponentInChildren<Text>().text = "Sounds ON";
         }
     }
 }
