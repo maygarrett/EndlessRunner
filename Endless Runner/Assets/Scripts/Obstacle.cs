@@ -36,7 +36,7 @@ public class Obstacle : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Projectile")
+        if (collision.gameObject.tag == "Projectile" && this.gameObject.tag == "ObstacleTap")
         {
             GameObject.Find("ScoreManager").GetComponent<ScoreManager>().AddOneToScore();
             Destroy(collision.gameObject);

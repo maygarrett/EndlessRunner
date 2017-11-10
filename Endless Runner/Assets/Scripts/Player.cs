@@ -65,6 +65,14 @@ public class Player : MonoBehaviour {
         }
 #endif
 
+#if UNITY_STANDALONE_WIN
+        if (!_pauseManager.GetPaused())
+        {
+            PCControls();
+            // SimulateMobileControls();
+        }
+#endif
+
 #if UNITY_ANDROID || UNITY_IOS
         if(!pauseManager.GetPaused())
         {
@@ -213,22 +221,28 @@ public class Player : MonoBehaviour {
         }
     }
 
+    // under construction
     private void FireProjectile(Vector2 pFireDirection)
     {
         // instantiate the projectile
         GameObject tempProjectile = Instantiate(_projectilePrefab, _projectileSpawnPoint.position, _projectileSpawnPoint.rotation);
         //calculate force/direction
         Vector2 tempForceDirection = pFireDirection - new Vector2(_projectileSpawnPoint.position.x, _projectileSpawnPoint.position.y);
-        Debug.Log(tempForceDirection);
+        //Debug.Log(tempForceDirection);
         Vector2 tempForceDirectionNormalized = tempForceDirection.normalized;
-        Debug.Log(tempForceDirectionNormalized);
+        //Debug.Log(tempForceDirectionNormalized);
         Vector2 tempProjectileForce = tempForceDirectionNormalized * _PROJECTILE_FORCE;
-        Debug.Log(tempProjectileForce);
+        //Debug.Log(tempProjectileForce);
         // apply force to the projectile
         tempProjectile.GetComponent<Rigidbody2D>().AddForce(tempProjectileForce);
+        StartCoroutine(DestroyProjectile(tempProjectile));
     }
 
-
+    private IEnumerator DestroyProjectile(GameObject pDestroyThis)
+    {
+        yield return new WaitForSeconds(3.0f);
+        Destroy(pDestroyThis);
+    }
 
 
 

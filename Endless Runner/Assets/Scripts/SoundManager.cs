@@ -33,19 +33,19 @@ public class SoundManager : MonoBehaviour {
     private const string _MUSIC_VOLUME_KEY = "MusicVolume";
     private const string _SFX_VOLUME_KEY = "SFXVolume";
 
+    // mixer channel keys
+    private const string _MASTER_MIXER_KEY = "Master";
+    private const string _MUSIC_MIXER_KEY = "MusicVolume";
+    private const string _SFX_MIXER_KEY = "SFXVolume";
+
+    // update bool used in update once
+    private bool _updated = false;
 
 
 
 
     private void Awake()
     {
-        // get audio mixers volume from playerprefs and set the mixer volumes to those values (Volume controls will set the sliders accordingly)
-        LoadVolumeSettings();
-    }
-
-
-    // Use this for initialization
-    void Start() {
         // instance singleton stuff
         if (instance)
         {
@@ -56,15 +56,23 @@ public class SoundManager : MonoBehaviour {
             instance = this;
             DontDestroyOnLoad(this);
         }
+    }
 
 
-        // initialization
+
+    // Use this for initialization
+    void Start() {
         PlayMusic(_menuMusic);
     }
 
     // Update is called once per frame
     void Update() {
-
+        if (!_updated)
+        {
+            UpdateCurrentVolumeWithPlayerPrefs();
+            _updated = true;
+        }
+            
     }
 
     public static SoundManager instance
@@ -107,54 +115,54 @@ public class SoundManager : MonoBehaviour {
 
     public void SetMusicVolume(float pVolume)
     {
-        _audioMixer.SetFloat("MusicVolume", pVolume);
+        _audioMixer.SetFloat(_MUSIC_MIXER_KEY, pVolume);
     }
 
     public void SetSFXVolume(float pVolume)
     {
-        _audioMixer.SetFloat("SFXVolume", pVolume);
+        _audioMixer.SetFloat(_SFX_MIXER_KEY, pVolume);
         
     }
 
     public void SetMasterVolume(float pVolume)
     {
-        _audioMixer.SetFloat("Master", pVolume);
+        _audioMixer.SetFloat(_MASTER_MIXER_KEY, pVolume);
     }
 
     public float GetMasterVolume()
     {
         float tempVolume;
-        _audioMixer.GetFloat("Master", out tempVolume);
+        _audioMixer.GetFloat(_MASTER_MIXER_KEY, out tempVolume);
         return tempVolume;
     }
 
     public float GetMusicVolume()
     {
         float tempVolume;
-        _audioMixer.GetFloat("MusicVolume", out tempVolume);
+        _audioMixer.GetFloat(_MUSIC_MIXER_KEY, out tempVolume);
         return tempVolume;
     }
 
     public float GetSFXVolume()
     {
         float tempVolume;
-        _audioMixer.GetFloat("SFXVolume", out tempVolume);
+        _audioMixer.GetFloat(_SFX_MIXER_KEY, out tempVolume);
         return tempVolume;
     }
 
     public void SaveVolumeSettings()
     {
+        // save seems to be setting the playerprefs fine
         PlayerPrefs.SetFloat(_MASTER_VOLUME_KEY, GetMasterVolume());
         PlayerPrefs.SetFloat(_MUSIC_VOLUME_KEY, GetMusicVolume());
         PlayerPrefs.SetFloat(_SFX_VOLUME_KEY, GetSFXVolume());
     }
 
-    public void LoadVolumeSettings()
+    public void UpdateCurrentVolumeWithPlayerPrefs()
     {
-        SetMasterVolume(PlayerPrefs.GetFloat(_MASTER_VOLUME_KEY));
-        SetMusicVolume(PlayerPrefs.GetFloat(_MUSIC_VOLUME_KEY));
-        SetSFXVolume(PlayerPrefs.GetFloat(_SFX_VOLUME_KEY));
+        _audioMixer.SetFloat(_MASTER_MIXER_KEY, PlayerPrefs.GetFloat(_MASTER_VOLUME_KEY));
+        _audioMixer.SetFloat(_MUSIC_MIXER_KEY, PlayerPrefs.GetFloat(_MUSIC_VOLUME_KEY));
+        _audioMixer.SetFloat(_SFX_MIXER_KEY, PlayerPrefs.GetFloat(_SFX_VOLUME_KEY));
     }
-
 
 }
