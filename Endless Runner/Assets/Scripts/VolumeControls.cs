@@ -5,23 +5,22 @@ using UnityEngine.UI;
 
 public class VolumeControls : MonoBehaviour {
 
-    private SoundManager _soundManager;
 
     [SerializeField]
-    private Slider _masterVolumeSlider;
+    public Slider _masterVolumeSlider;
     [SerializeField]
     private Slider _musicVolumeSlider;
     [SerializeField]
     private Slider _sfxVolumeSlider;
 
+    private void Awake()
+    {
+        UpdateSliderValuesWithPlayerPrefs();
+    }
+
     // Use this for initialization
     void Start () {
-        _soundManager = GameObject.FindObjectOfType<SoundManager>();
 
-        if(!_soundManager)
-        {
-            Debug.LogError("Having trouble finding SoundManager");
-        }
 	}
 	
 	// Update is called once per frame
@@ -49,14 +48,26 @@ public class VolumeControls : MonoBehaviour {
         SoundManager.instance.SetMusicVolume(0);
         SoundManager.instance.SetSFXVolume(0);
         SoundManager.instance.SetMasterVolume(0);
-        UpdateSliderValues();
+        UpdateSliderValuesWithCurrentVolume();
     }
 
-    public void UpdateSliderValues()
+    public void UpdateSliderValuesWithPlayerPrefs()
     {
-        _masterVolumeSlider.value = _soundManager.GetMasterVolume();
-        _musicVolumeSlider.value = _soundManager.GetMusicVolume();
-        _sfxVolumeSlider.value = _soundManager.GetSFXVolume();
+        _masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume");
+        _musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+        _sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume");
+    }
+
+    public void UpdateSliderValuesWithCurrentVolume()
+    {
+        _masterVolumeSlider.value = SoundManager.instance.GetMasterVolume();
+        _musicVolumeSlider.value = SoundManager.instance.GetMusicVolume();
+        _sfxVolumeSlider.value = SoundManager.instance.GetSFXVolume();
+    }
+
+    public void SaveVolumeControl()
+    {
+        SoundManager.instance.SaveVolumeSettings();
     }
 
 }

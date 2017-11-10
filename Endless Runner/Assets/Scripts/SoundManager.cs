@@ -33,19 +33,13 @@ public class SoundManager : MonoBehaviour {
     private const string _MUSIC_VOLUME_KEY = "MusicVolume";
     private const string _SFX_VOLUME_KEY = "SFXVolume";
 
+    private bool updated = false;
 
 
 
 
     private void Awake()
     {
-        // get audio mixers volume from playerprefs and set the mixer volumes to those values (Volume controls will set the sliders accordingly)
-
-    }
-
-
-    // Use this for initialization
-    void Start() {
         // instance singleton stuff
         if (instance)
         {
@@ -56,15 +50,23 @@ public class SoundManager : MonoBehaviour {
             instance = this;
             DontDestroyOnLoad(this);
         }
+    }
 
 
-        // initialization
+
+    // Use this for initialization
+    void Start() {
         PlayMusic(_menuMusic);
     }
 
     // Update is called once per frame
     void Update() {
-
+        if (!updated)
+        {
+            UpdateCurrentVolumeWithPlayerPrefs();
+            updated = true;
+        }
+            
     }
 
     public static SoundManager instance
@@ -144,9 +146,24 @@ public class SoundManager : MonoBehaviour {
 
     public void SaveVolumeSettings()
     {
+        // save seems to be setting the playerprefs fine
         PlayerPrefs.SetFloat(_MASTER_VOLUME_KEY, GetMasterVolume());
         PlayerPrefs.SetFloat(_MUSIC_VOLUME_KEY, GetMusicVolume());
         PlayerPrefs.SetFloat(_SFX_VOLUME_KEY, GetSFXVolume());
+        Debug.Log(PlayerPrefs.GetFloat(_MASTER_VOLUME_KEY));
+    }
+
+    public void UpdateCurrentVolumeWithPlayerPrefs()
+    {
+        _audioMixer.SetFloat("Master", PlayerPrefs.GetFloat("MasterVolume"));
+        /* tempNumber = PlayerPrefs.GetFloat(_MASTER_VOLUME_KEY);
+        Debug.Log("tempNumber: " + tempNumber);
+        Debug.Log("Player prefs master volume number: " + PlayerPrefs.GetFloat(_MASTER_VOLUME_KEY));
+        SetMasterVolume(tempNumber);
+        // above junk was working when placed in update */
+
+        _audioMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicVolume"));
+        _audioMixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("SFXVolume"));
     }
 
 }
