@@ -8,6 +8,8 @@ public class HighScoreManager : MonoBehaviour {
 
     private static HighScoreManager _instance = null;
 
+    private const string _HIGH_SCORE_KEY = "HIGH_SCORE";
+
     private int _highScore;
 
     private void Awake()
@@ -22,6 +24,8 @@ public class HighScoreManager : MonoBehaviour {
 
             DontDestroyOnLoad(this);
         }
+
+        SetHighScore(PlayerPrefs.GetInt(_HIGH_SCORE_KEY));
     }
 
     // Use this for initialization
@@ -51,10 +55,12 @@ public class HighScoreManager : MonoBehaviour {
     public void SetHighScore(int pValue)
     {
         _highScore = pValue;
+        PlayerPrefs.SetInt(_HIGH_SCORE_KEY, pValue);
     }
 
     public void ResetHighScore()
     {
         _highScore = 0;
+        PlayerPrefs.SetInt(_HIGH_SCORE_KEY, 0);
     }
 }
