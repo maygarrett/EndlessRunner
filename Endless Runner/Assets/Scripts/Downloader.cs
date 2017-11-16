@@ -25,15 +25,15 @@ namespace GameData
             DownloadCSV(CONSTANTS_TAB_ID, Constants.FilePath);
         }
 
-        private static void DownloadCSV(string tabID, string filePath)
+        private static void DownloadCSV(string pTabID, string pFilePath)
         {
 
-            Debug.Log(filePath);
+            Debug.Log(pFilePath);
 
             //Get the formatted URL
-            string downloadUrl = string.Format(URL_FORMAT, SPREADSHEET_ID, tabID);
+            string downloadUrl = string.Format(URL_FORMAT, SPREADSHEET_ID, pTabID);
 
-            Debug.LogFormat("Downloading {0}", tabID);
+            Debug.LogFormat("Downloading {0}", pTabID);
 
             //Download the data
             WWW website = new WWW(downloadUrl);
@@ -56,7 +56,11 @@ namespace GameData
                 Constants.Initialize();
                 Localization.Initialize();
                 //Save to disk
-                File.WriteAllText(filePath, website.text);
+                if (File.Exists(pFilePath))
+                {
+                    File.Delete(pFilePath);
+                }
+                File.WriteAllText(pFilePath, website.text);
             }
         }
     }

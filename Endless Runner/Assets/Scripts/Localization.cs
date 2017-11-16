@@ -29,6 +29,7 @@ namespace GameData
             {
                 StreamReader sr = File.OpenText(FilePath);
                 lines = sr.ReadToEnd().Split('\n');
+                sr.Close();
             }
             else
             {

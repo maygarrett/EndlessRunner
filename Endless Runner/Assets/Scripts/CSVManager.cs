@@ -24,18 +24,8 @@ public class CSVManager : MonoBehaviour {
             DontDestroyOnLoad(this);
         }
 
+        Downloader.Init();
 
-
-        if (Application.internetReachability == NetworkReachability.NotReachable)
-        {
-            Debug.Log("Error. Check internet connection!");
-            Constants.Initialize();
-            Localization.Initialize();
-        }
-        else
-        {
-            Downloader.Init();
-        }
 
     }
 
