@@ -9,6 +9,16 @@ namespace GameData
     {
         private static Dictionary<string, string> localizationDictionary = new Dictionary<string, string>();
 
+        public static string FilePath
+        {
+            get
+            {
+                string persistentPath = Application.persistentDataPath;
+                string savePath = string.Format("{0}/Localization.csv", persistentPath);
+                return savePath;
+            }
+        }
+
         public static void Initialize()
         {
             TextAsset localizationCSV;

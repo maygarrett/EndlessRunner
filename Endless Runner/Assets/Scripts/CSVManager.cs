@@ -23,11 +23,25 @@ public class CSVManager : MonoBehaviour {
 
             DontDestroyOnLoad(this);
         }
+
+
+
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            Debug.Log("Error. Check internet connection!");
+            Constants.Initialize();
+            Localization.Initialize();
+        }
+        else
+        {
+            Downloader.Init();
+        }
+
     }
 
     private void Start()
     {
-        Constants.Initialize();
+
     }
 
     private static CSVManager instance 
