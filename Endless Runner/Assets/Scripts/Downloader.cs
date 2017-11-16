@@ -56,10 +56,6 @@ namespace GameData
                 Constants.Initialize();
                 Localization.Initialize();
                 //Save to disk
-                if (File.Exists(pFilePath))
-                {
-                    File.Delete(pFilePath);
-                }
                 File.WriteAllText(pFilePath, website.text);
             }
         }
