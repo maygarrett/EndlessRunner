@@ -14,7 +14,7 @@ namespace GameData
             get
             {
                 string persistentPath = Application.persistentDataPath;
-                string savePath = string.Format("{0}/Localization.csv", persistentPath);
+                string savePath = string.Format("{0}/LocalizationDownload.csv", persistentPath);
                 return savePath;
             }
         }

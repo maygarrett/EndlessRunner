@@ -46,11 +46,15 @@ namespace GameData
             {
                 Debug.LogError("NO DATA WAS RECEIVED");
                 //Load the last cached values
+                Constants.Initialize();
+                Localization.Initialize();
             }
             else
             {
                 Debug.Log(website.text);
                 //Successfully got the data, process it
+                Constants.Initialize();
+                Localization.Initialize();
                 //Save to disk
                 File.WriteAllText(filePath, website.text);
             }
