@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 namespace GameData
 {
@@ -10,13 +11,25 @@ namespace GameData
 
         public static void Initialize()
         {
-            TextAsset localizationCSV = Resources.Load<TextAsset>("Localization");
+            TextAsset localizationCSV;
 
-            string[] lines = localizationCSV.text.Split('\n');
+            string[] lines;
 
-            foreach (string l in lines)
+            if (File.Exists(FilePath))
             {
-                string[] data = l.Split(',');
+                StreamReader sr = File.OpenText(FilePath);
+                lines = sr.ReadToEnd().Split('\n');
+            }
+            else
+            {
+                Debug.LogFormat("{0} does not exist", FilePath);
+                localizationCSV = Resources.Load<TextAsset>("Localization");
+                lines = localizationCSV.text.Split('\n');
+            }
+
+            for (int i = 1; i < lines.Length; i++)
+            {
+                string[] data = lines[i].Split(',');
 
                 if (data.Length == 6)
                 {

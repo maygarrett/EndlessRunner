@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 namespace GameData
 {
@@ -12,15 +13,36 @@ namespace GameData
         private static Dictionary<string, float> floatConstants = new Dictionary<string, float>();
         private static Dictionary<string, string> stringConstants = new Dictionary<string, string>();
 
+        public static string FilePath
+        {
+            get
+            {
+                string persistentPath = Application.persistentDataPath;
+                string savePath = string.Format("{0}/Constants.csv", persistentPath);
+                return savePath;
+            }
+        }
+
         public static void Initialize()
         {
-            TextAsset constantsCSV = Resources.Load<TextAsset>("Constants");
+            TextAsset constantsCSV;
+            string[] lines;
 
-            string[] lines = constantsCSV.text.Split('\n');
-
-            foreach (string l in lines)
+            if (File.Exists(FilePath))
             {
-                string[] data = l.Split(',');
+                StreamReader sr = File.OpenText(FilePath);
+                lines = sr.ReadToEnd().Split('\n');
+            }
+            else
+            {
+                Debug.LogFormat("{0} does not exist", FilePath);
+                constantsCSV = Resources.Load<TextAsset>("Constants");
+                lines = constantsCSV.text.Split('\n');
+            }
+
+            for (int i = 1; i < lines.Length; i++)
+            {
+                string[] data = lines[i].Split(',');
 
                 if (data.Length == 3)
                 {
